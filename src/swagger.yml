@@ -1,0 +1,55 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: 1.0.0
+  title: API Demo
+consumes:
+- application/json
+produces:
+- application/json
+
+basePath: /
+
+definitions:
+  ElectricityReadings:
+    type: array
+    items:
+      type: object
+      properties:
+        time:
+          type: integer
+        reading:
+          type: number
+  
+
+# Paths supported by the server application
+paths:
+  /readings/store:
+    post:
+      operationId: controller.electricity_reading_controller.store
+      tags:
+      - Electricity Reading Controller
+      summary: Store Readings
+      parameters:
+      - name: data
+        in: body
+        required: True
+        schema:
+          type: object
+          properties:
+            smartMeterId:
+              type: string
+            electricityReadings:
+              $ref: '#/definitions/ElectricityReadings'
+      responses:
+        200:
+          description: Successful store operation
+          schema:
+            type: object
+            properties:
+              smartMeterId:
+                type: string
+              electricityReadings:
+                $ref: '#/definitions/ElectricityReadings'
+  
+  
